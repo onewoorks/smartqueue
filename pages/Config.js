@@ -1,0 +1,1 @@
+var API_URL = 'http://10.1.1.129/SmartQ/smartq'
