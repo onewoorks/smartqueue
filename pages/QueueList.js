@@ -12,10 +12,11 @@ import {
   PixelRatio
 } from 'react-native';
 import {Content, List, ListItem} from 'native-base';
-import Config from 'react-native-config';
 import {Actions} from 'react-native-router-flux';
 
-var REQUEST_URL = Config.API_URL;
+var Config = require("../config");
+
+var REQUEST_URL = Config.BASE_URL;
 var style = require('../Themes/Style');
 
 export default class NearestList extends Component {

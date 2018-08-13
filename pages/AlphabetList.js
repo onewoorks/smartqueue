@@ -15,10 +15,12 @@ import {
 } from 'react-native';
 import {Content, Button} from 'native-base';
 import {Actions} from 'react-native-router-flux';
-import Config from 'react-native-config';
 
 var style = require('../Themes/Style');
-var REQUEST_URL = Config.API_URL;
+
+var Config = require("../config");
+
+var REQUEST_URL = Config.BASE_URL;
 
 export default class AlphabetList extends Component {
 

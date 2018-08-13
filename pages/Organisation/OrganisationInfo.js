@@ -12,14 +12,15 @@ import {
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import SmartQTheme from '../../Themes/default';
-import Config from 'react-native-config';
+
+var Config = require("../../config");
+
+var REQUEST_URL = Config.BASE_URL;
 
 var style = require('../../Themes/Style');
 var height = Dimensions
     .get('window')
     .height;
-
-var REQUEST_URL = Config.API_URL;
 
 export default class OrganisationInfo extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ export default class OrganisationInfo extends Component {
     }
 
     fetchData() {
+        console.log(REQUEST_URL + '/organisation.json?id=' + this.props.orgid)
         fetch(REQUEST_URL + '/organisation.json?id=' + this.props.orgid, {method: "GET"}).then((response) => {
             return response.json()
         }).then((responseData) => {

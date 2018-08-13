@@ -30,7 +30,6 @@ export default class Listing extends Component {
     }
   }
   render() {
-
     return (
       <Container theme={SmartQTheme}>
         <Header>

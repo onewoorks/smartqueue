@@ -14,11 +14,12 @@ import {
 } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import SmartQTheme from '../../Themes/default';
-import Config from 'react-native-config';
+
+var Config = require("../../config");
+
+var REQUEST_URL = Config.BASE_URL;
 
 var style = require('../../Themes/Style');
-
-var REQUEST_URL = Config.API_URL;
 
 export default class OrganisationDetail extends Component {
     constructor(props){

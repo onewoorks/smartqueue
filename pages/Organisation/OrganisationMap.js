@@ -3,9 +3,10 @@ import {View, Text, StyleSheet, MapView, Dimensions, Linking, Alert} from 'react
 import {Actions} from 'react-native-router-flux';
 import {Container, Content, Button, Card, CardItem, Header, Title, Icon, Footer, FooterTab} from 'native-base';
 import SmartQTheme from '../../Themes/default';
-import Config from 'react-native-config';
 
-var REQUEST_URL = Config.API_URL+'/organisation.json?';
+var Config = require("../../config");
+
+var REQUEST_URL = Config.BASE_URL+'/organisation.json?';
 var height = Dimensions.get('window').height;
 
 export default class KKInfo extends Component {
