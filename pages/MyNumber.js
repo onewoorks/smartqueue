@@ -28,7 +28,8 @@ export default class MyNumber extends Component {
     }
 
     fetchData() {
-        fetch(REQUEST_URL + '/organisation.json?addid=' + this.props.orgid, {method: "GET"}).then((response) => {
+        console.log(REQUEST_URL + '/organisation.json?addid=' + this.props.orgid);
+        fetch(REQUEST_URL + '/organisation.json?addid=' + this.props.orgid, {method: "POST"}).then((response) => {
             return response.json()
         }).then((responseData) => {
             return responseData;
@@ -131,7 +132,7 @@ export default class MyNumber extends Component {
                             flex: 1,
                             flexDirection: 'row',
                             alignItems: 'center',
-                            backgroundColor: '#B70B4E',
+                            backgroundColor: '#005e2d',
                             padding: 10
                         }}>
                             <View
@@ -179,7 +180,7 @@ export default class MyNumber extends Component {
                             alignItems: 'center',
                             padding: 10,
                             borderWidth: 1,
-                            borderColor: '#B70B4E'
+                            borderColor: '#005e2d'
                         }}>
                             <View
                                 style={{

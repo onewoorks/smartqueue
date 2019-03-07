@@ -28,7 +28,7 @@ export default class Login extends Component{
                 <View style={{margin:10}}>
                     <Button 
                         block 
-                        style={{backgroundColor:'#B70B4E'}}
+                        style={{backgroundColor:'#005e2d'}}
                         onPress={goToPreRegister}>Sign Up!</Button>
                 </View>
             

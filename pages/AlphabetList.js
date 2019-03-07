@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import {
   TouchableHighlight,
   PixelRatio
 } from 'react-native';
-import {Content, Button} from 'native-base';
-import {Actions} from 'react-native-router-flux';
+import { Content, Button } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 
 var style = require('../Themes/Style');
 
@@ -39,7 +39,8 @@ export default class AlphabetList extends Component {
   }
 
   fetchData() {
-    fetch(REQUEST_URL + "/organisation.json?alphabet", {method: "GET"}).then((response) => response.json()).then((responseData) => {
+    console.log(REQUEST_URL + "/organisation.json?imi-alphabet");
+    fetch(REQUEST_URL + "/organisation.json?imi-alphabet", { method: "GET" }).then((response) => response.json()).then((responseData) => {
       this.setState({
         dataSource: this
           .state
@@ -54,7 +55,7 @@ export default class AlphabetList extends Component {
   }
 
   renderRow(rowData) {
-    const organisationPage = () => Actions.orgInfo({orgid: rowData.id});
+    const organisationPage = () => Actions.orgInfo({ orgid: rowData.id });
     return (
       <View style={style.listContainer}>
 
@@ -79,7 +80,7 @@ export default class AlphabetList extends Component {
   renderOrganisation() {
     return (
       <Content style={style.container}>
-        <ListView renderRow={this.renderRow} dataSource={this.state.dataSource}/>
+        <ListView renderRow={this.renderRow} dataSource={this.state.dataSource} />
       </Content>
     );
   }

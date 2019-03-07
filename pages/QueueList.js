@@ -36,7 +36,8 @@ export default class NearestList extends Component {
   }
 
   fetchData() {
-    fetch(REQUEST_URL + "/organisation.json?quesort", {method: "GET"}).then((response) => response.json()).then((responseData) => {
+    console.log(REQUEST_URL + "/organisation.json?quesortImi");
+    fetch(REQUEST_URL + "/organisation.json?quesortImi", {method: "GET"}).then((response) => response.json()).then((responseData) => {
       this.setState({
         dataSource: this
           .state
@@ -63,18 +64,27 @@ export default class NearestList extends Component {
               .name
               .toUpperCase()}</Text>
           <Text style={style.infoSubtext}>
-            {rowData.alamat},{rowData.daerah},{rowData.negeri}
+              {rowData.address_1},{rowData.address_2},{rowData.negeri}
           </Text>
           </TouchableOpacity>
         </View>
-        <View style={style.totalArea}>
-          <Text style={style.listTitleCounter}>Total</Text>
-          <Text style={style.listBigNoCounter}>{rowData.que_no}</Text>
+        <View style={{flex:0.3}}>
+          <View style={{flexDirection:'row'}}>
+            <View style={style.totalArea}>
+              <Text style={style.listTitleCounter}>Total</Text>
+              <Text style={style.listBigNoCounter}>{rowData.que_no}</Text>
+            </View>
+            <View style={style.statusArea}>
+              <Text style={style.listTitleCounter}>Current</Text>
+              <Text style={style.listBigNoCounter}>{rowData.current_no}</Text>
+            </View>
+          </View>
+          <View style={style.remainingArea}>
+            <Text style={{fontSize: 10, paddingTop: 3, color:'#fff'}}>Remaining</Text>
+            <Text style={{fontSize: 14, color:'#fff', fontWeight:'bold'}}>{rowData.max_out-rowData.que_no}</Text>
+          </View>
         </View>
-        <View style={style.statusArea}>
-          <Text style={style.listTitleCounter}>Current</Text>
-          <Text style={style.listBigNoCounter}>{rowData.current_no}</Text>
-        </View>
+        
       </View>
     )
   }

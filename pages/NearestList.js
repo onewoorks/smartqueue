@@ -1,20 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  List,
   ListView,
-  ScrollView,
-  Image,
-  TabBarIOS,
-  Card,
-  TouchableOpacity,
-  TouchableHighlight,
-  PixelRatio
 } from 'react-native';
-import {Content, Button} from 'native-base';
-import {Actions} from 'react-native-router-flux';
+import { Content, Button } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 
 var style = require('../Themes/Style');
 
@@ -30,16 +21,34 @@ export default class NearestList extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
       }),
-      organisation: false
+      organisation: false,
+      coordinate: null
     }
   }
 
   componentDidMount() {
-    this.fetchData();
+    navigator
+      .geolocation
+      .getCurrentPosition((position) => {
+        this.setState({ coordinate: position });
+        this.fetchData();
+      }, (error) => alert(JSON.stringify(error)), {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 1000
+        }); 
   }
 
   fetchData() {
-    fetch(REQUEST_URL + "/organisation.json?distance", {method: "GET"}).then((response) => response.json()).then((responseData) => {
+    let lat = this.state.coordinate.coords.latitude
+    let long = this.state.coordinate.coords.longitude
+    console.log(lat)
+    console.log(long)
+    let url = REQUEST_URL + "/organisation.json?distance&lat="+ lat + "&long="+ long
+    console.log(url)
+    fetch(url, { method: "GET" })
+      .then((response) => response.json())
+      .then((responseData) => {
       this.setState({
         dataSource: this
           .state
@@ -56,7 +65,12 @@ export default class NearestList extends Component {
   }
 
   renderRow(rowData) {
-    const organisationPage = () => Actions.orgInfo({orgid: rowData.id});
+    const organisationPage = () => Actions.orgInfo({ orgid: rowData.id });
+    var address_2;
+    if (rowData.address_2=="") {
+    } else {
+      address_2 = <Text style={style.infoSubtext}>{rowData.address_2}</Text>;
+    }
     return (
       <View style={style.listContainer}>
         <View style={style.infoArea}>
@@ -65,14 +79,20 @@ export default class NearestList extends Component {
             style={style.listTitle}>{rowData
               .name
               .toUpperCase()}</Text>
-          <Text style={style.infoSubtext}>
-            {rowData.alamat},{rowData.daerah},{rowData.negeri}
-          </Text>
+          <Text style={style.infoSubtext}>{rowData.address_1}</Text>
+          {address_2}
+          <Text style={style.infoSubtext}>{rowData.postcode}, {rowData.town}, {rowData.state}</Text>
         </View>
-        <View style={style.greyArea}></View>
-        <View style={style.distanceArea}>
-          <Text style={style.listTitleCounter}>Dist</Text>
-          <Text style={style.listBigNoCounter}>{rowData.jarak}</Text>
+        <View style={{flex:0.3}}>
+          <View style={[style.distanceArea]}>
+            <Text style={style.listTitleCounter}>KM</Text>
+            <Text style={style.listBigNoCounter}>{rowData.distance}</Text>
+          </View>
+
+          <View style={style.remainingArea}>
+            <Text style={{ fontSize: 10, paddingTop: 3, color: '#fff' }}>Remaining</Text>
+            <Text style={{ fontSize: 14, color: '#fff', fontWeight: 'bold' }}>{rowData.max_out}</Text>
+          </View>
         </View>
       </View>
     )
@@ -81,7 +101,7 @@ export default class NearestList extends Component {
   renderOrganisation() {
     return (
       <Content style={style.container}>
-        <ListView renderRow={this.renderRow} dataSource={this.state.dataSource}/>
+        <ListView renderRow={this.renderRow} dataSource={this.state.dataSource} />
       </Content>
     );
   }

@@ -14,6 +14,8 @@
     "react-native-config": "0.1.1",
     "react-native-drawer": "2.3.0",
     "react-native-dropdown": "0.0.6",
+    "react-native-maps": "^0.21.0",
+    "react-native-maps-directions": "^1.6.0",
     "react-native-qrcode": "0.2.2",
     "react-native-router-flux": "3.36.0",
     "react-native-scrollable-tab-view": "0.6.0",

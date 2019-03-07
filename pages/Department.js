@@ -22,45 +22,29 @@ export default class Department extends Component {
         return (
             <Container theme={SmartQTheme}>
                 <Header>
-                    <Button transparent>
-                        <Icon
-                            name='ios-person-outline'
-                            style={{
-                            color: 'white',
-                            fontSize: 30
-                        }}/>
-                    </Button>
                     <Title style={{
                         color: 'white'
-                    }}>Jabatan</Title>
+                    }}>TRANSACTIONS</Title>
                 </Header>
                 <Content style={style.content}>
                     <Card>
-                        <CardItem header>
-                            <Text>Klinik Kesihatan</Text>
+                        <CardItem onPress={() => Actions.listing({title: 'Passport'})}>
+                            <Text>Passport</Text>
                         </CardItem>
-                        <CardItem onPress={() => Actions.listing({title: 'Farmasi'})}>
-                            <Text>Farmasi</Text>
+                        <CardItem onPress={() => Actions.listing({ title: 'Visa' })}>
+                            <Text>Visa</Text>
                         </CardItem>
-                        <CardItem onPress={() => Actions.listing({title: 'Rawatan Am '})}>
-                            <Text>Rawatan Am</Text>
+                        <CardItem onPress={() => Actions.listing({ title: 'PLS' })}>
+                            <Text>PLS</Text>
                         </CardItem>
-                        <CardItem onPress={() => Actions.listing({title: 'Ibu dan Anak'})}>
-                            <Text>Ibu dan Anak</Text>
+                        <CardItem onPress={() => Actions.listing({ title: 'Esd' })}>
+                            <Text>ESD</Text>
                         </CardItem>
-                    </Card>
-
-                    <Card style={{
-                        marginTop: 8
-                    }}>
-                        <CardItem header>
-                            <Text>Klinik Desa</Text>
+                        <CardItem onPress={() => Actions.listing({ title: 'PLKS' })}>
+                            <Text>PLKS</Text>
                         </CardItem>
-                        <CardItem onPress={() => Actions.listing({title: 'Farmasi'})}>
-                            <Text>Farmasi</Text>
-                        </CardItem>
-                        <CardItem onPress={() => Actions.listing({title: 'Ibu dan Anak'})}>
-                            <Text>Ibu dan Anak</Text>
+                        <CardItem onPress={() => Actions.listing({ title: 'PRA' })}>
+                            <Text>PRA</Text>
                         </CardItem>
                     </Card>
                 </Content>

@@ -1,10 +1,18 @@
 var _Environments = {
-    localhost: { BASE_URL: 'http://localhost/SmartQ/smartq', API_KEY: '' },
-    onewoorks: { BASE_URL: 'https://onewoorks-solutions.com/smartq', API_KEY: '' }
+    localhost: {
+        BASE_URL: 'http://localhost/SmartQ/smartq',
+        API_KEY: '',
+        IMAGE_URL: 'http://localhost/SmartQ/smartq/images/'
+    },
+    onewoorks: {
+        BASE_URL: 'https://localhost/SmartQ/smartq',
+        API_KEY: '',
+        IMAGE_URL: 'http://localhost/SmartQ/smartq/images/'
+    }
 }
 
 function getEnvironment() {
-    return _Environments.onewoorks
+    return _Environments.localhost
 }
 
 var Environment = getEnvironment()

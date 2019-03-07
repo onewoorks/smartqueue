@@ -31,7 +31,7 @@ export default class OrganisationDetail extends Component {
     }
 
     fetchData() {
-        fetch(REQUEST_URL + '/organisation.json?id=' + this.props.orgid, {method: "GET"}).then((response) => {
+        fetch(REQUEST_URL + '/organisation.json?imi-info=' + this.props.orgid, {method: "GET"}).then((response) => {
             return response.json()
         }).then((responseData) => {
             return responseData;
@@ -40,18 +40,21 @@ export default class OrganisationDetail extends Component {
                 orgName: data
                     .name
                     .toUpperCase(),
-                orgAddress: data.alamat,
-                orgDaerah: data.daerah,
-                orgNegeri: data.negeri,
+                orgAddress: data.address_1 + ', ' + data.address_2,
+                orgDaerah: data.town,
+                orgNegeri: data.state,
                 orgQueue: data.que_no,
                 orgCurrent: data.current_no,
                 orgWaitingTime: (data.que_no - data.current_no) * 10,
-                orgEstimate: data.estimate
+                orgEstimate: data.estimate,
+                imageNo: data.ref_code
             })
         }).done();
     }
 
     render() {
+        var imageUri = 'http://localhost/SmartQ/smartq/images/' + this.state.imageNo + '1.jpg';
+        console.log(imageUri)
         return (
             <Container theme={SmartQTheme}>
                 <Header>
@@ -64,7 +67,7 @@ export default class OrganisationDetail extends Component {
                     </Button>
                     <Title style={{
                         color: '#fff'
-                    }}>INFORMATION {this.props.orgid}</Title>
+                    }}>IMIGRESEN</Title>
                 </Header>
 
                 <Content style={{
@@ -73,14 +76,15 @@ export default class OrganisationDetail extends Component {
                     <Card >
                         <CardItem>
                             <Text style={style.textTitle}>{this.state.orgName}</Text>
-                            <Text style={style.textSubtitle} note>{this.state.orgAddress}, {this.state.orgDaerah}, {this.state.orgNegeri}</Text>
+                            <Text style={style.textSubtitle} 
+                                note>{this.state.orgAddress}, {this.state.orgDaerah}, {this.state.orgNegeri}</Text>
                         </CardItem>
                         <CardItem cardBody>
                             <Image
                                 style={{
                                 resizeMode: 'cover', width:null
                             }}
-                                source={require('../../assets/klinikdesa.jpeg')}
+                                source={{ uri: imageUri }}
                             />
 
                         </CardItem>
@@ -95,24 +99,13 @@ export default class OrganisationDetail extends Component {
                                 culpa qui officia deserunt mollit anim id est laborum.
                             </Text>
                         </CardItem>
-
-                        <CardItem cardBody>
-                            <Image
-                                style={{
-                                resizeMode: 'cover',
-                                width:null
-                            }}
-                                source={require('../../assets/klinikdesa.jpeg')}
-                            />
-                            
-                        </CardItem>
                     </Card>
                 </Content>
                 <Footer>
                     <FooterTab>
-                        <Button onPress={this.handleCall}><Icon name='ios-call-outline'/>Call</Button>
-                        <Button><Icon name='ios-map-outline'/>Direction</Button>
-                        <Button><Icon name='ios-car-outline'  style={{color:'#fff'}}/>Transport</Button>
+                        <Button onPress={this.handleCall}><Icon name='ios-call'/>Call</Button>
+                        <Button><Icon name='ios-map'/>Direction</Button>
+                        <Button><Icon name='ios-car'  style={{color:'#fff'}}/>Transport</Button>
                     </FooterTab>
                 </Footer>
             </Container>

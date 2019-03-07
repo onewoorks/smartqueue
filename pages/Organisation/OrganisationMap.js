@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, MapView, Dimensions, Linking, Alert} from 'react-native';
+import {StyleSheet, MapView, Dimensions, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Container, Content, Button, Card, CardItem, Header, Title, Icon, Footer, FooterTab} from 'native-base';
+import {Container, Content, Button, Header, Title, Icon, Footer, FooterTab} from 'native-base';
 import SmartQTheme from '../../Themes/default';
 
 var Config = require("../../config");
 
-var REQUEST_URL = Config.BASE_URL+'/organisation.json?';
 var height = Dimensions.get('window').height;
 
 export default class KKInfo extends Component {
@@ -14,24 +13,24 @@ export default class KKInfo extends Component {
     super(props);
     this.state = {
       orgsid: this.props.orgsid,
-      url : 'https://onewoorks-solutions.com'
+      url : 'https://onewoorks-solutions.com',
+      org_data: this.props.org_data
     }
   }
 
-  componentDidMount() {
-    this.fetchData();
+  componentDidMount() { 
+    // this.fetchData();
     navigator
       .geolocation
       .getCurrentPosition((position) => {
         var initialPosition = JSON.stringify(position);
-        this.setState({initialPosition});
+        this.setState({ initialPosition});
       }, (error) => alert(JSON.stringify(error)), {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 1000
       });
   }
-
   convertMinuteToHour() {
     var hours = (this.state.orgWaitingTime / 60);
     var minutes = (this.state.orgWaitingTime % 60);
@@ -67,26 +66,6 @@ export default class KKInfo extends Component {
     return resultStatement;
   }
 
-  fetchData() {
-    fetch(REQUEST_URL + 'id=1', {method: "GET"}).then((response) => {
-      return response.json()
-    }).then((responseData) => {
-      return responseData;
-    }).then((data) => {
-      this.setState({
-        orgName: data
-          .name
-          .toUpperCase(),
-        orgAddress: data.alamat,
-        orgDaerah: data.daerah,
-        orgNegeri: data.negeri,
-        orgQueue: data.queue,
-        orgWaitingTime: (data.queue * 10)
-      })
-    }).done();
-  }
-
-
   handleClick() {
     Alert.alert('test');
     // Linking.canOpenURL(this.state.url).then(supported => {
@@ -102,25 +81,28 @@ export default class KKInfo extends Component {
   }
 
   render() {
-    const pagePreRegister = () => Actions.preRegister({org_id: this.props.data})
+    const organisationPage = () => Actions.orgInfo({ orgid: this.state.org_data.id });
     return (
       <Container theme={SmartQTheme}>
         <Header>
-        <Button transparent
-          onPress={() => Actions.orgInfo()}
-        >
-                        <Icon name='ios-arrow-back' style={{color:'#fff'}} />
-                    </Button>
+          <Button transparent onPress={organisationPage}>
+            <Icon name='ios-arrow-back' style={{color:'#fff'}} />
+          </Button>
           <Title style={{color:'#fff'}}>Information</Title>
         </Header>
+
         <Content>
-        <MapView style={styles.map} showsUserLocation={true} followUserLocation={true}/>
+        <MapView region={{
+            latitude: 1.46078,
+            longitude: 103.75828,
+            latitudeDelta: 0,
+            longitudeDelta: 0,
+        }} style={styles.map} showsUserLocation={true} followUserLocation={true} />
         </Content>
         <Footer>
           <FooterTab>
-          <Button onPress={this.handleCall}><Icon name='ios-call-outline' />Call</Button>
-          <Button><Icon name='ios-map-outline' />Direction</Button>
-          <Button><Icon name='ios-car-outline'/>Transport</Button>
+          <Button onPress={this.handleCall}><Icon name='ios-call' />Call</Button>
+          <Button><Icon name='ios-car'/>Transport</Button>
           </FooterTab>
         </Footer>
       </Container>

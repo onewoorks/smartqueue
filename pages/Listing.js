@@ -49,15 +49,14 @@ export default class Listing extends Component {
         <Content>
           <ScrollableTabView
             style={{ height: this.state.height}}
-            initialPage={2}
+            initialPage={0}
             tabBarTextStyle={{
             color: '#fff',
             fontSize: 15
           }}
-            tabBarBackgroundColor={'#B70B4E'}>
-            <NearestList tabLabel="KM"/>
-            <AlphabetList tabLabel="A-Z"/>
-            <QueueList tabLabel="No. Q"/>
+            tabBarBackgroundColor={'#005e2d'}>
+            <QueueList tabLabel="No. Q" />
+            <NearestList tabLabel="Distance [KM]"/>
           </ScrollableTabView>
         </Content>
       </Container>
